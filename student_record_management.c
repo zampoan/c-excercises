@@ -12,6 +12,22 @@ void startMenu(){
     printf("\t----------------------\n");
 }
 
+struct Record {
+    char studentName[20];
+    int classID;
+    float percentage;
+    struct Record* next;
+};
+
+struct Record* newRecord(char* studentName, int classID, float percentage){
+    // Function to create a newRecord
+    struct Record* temp = (struct Record*)malloc(sizeof(struct Record));
+    strcpy(temp->studentName, studentName);
+    temp->classID = classID;
+    temp->percentage = percentage;
+    temp->next = NULL;
+}
+
 void addStudentInfoMenu(){
     char studentName[20];
     int classID;
@@ -28,24 +44,8 @@ void addStudentInfoMenu(){
     printf("\nEnter Percentage: ");
     scanf("%f", &percentage);
     
-    // Create record based off info
+    // Create and Store record based off info
     struct Record* student = newRecord(studentName, classID, percentage);
-}
-
-struct Record {
-    char studentName[20];
-    int classID;
-    float percentage;
-    struct Record* next;
-};
-
-struct Record* newRecord(char studentName, int classID, float percentage){
-    // Function to create a newRecord
-    struct Record* temp = (struct Record*)malloc(sizeof(struct Record));
-    temp->studentName = studentName;
-    temp->classID = classID;
-    temp->percentage = percentage;
-    temp->next = NULL;
 }
 
 int main(){
