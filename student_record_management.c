@@ -26,23 +26,34 @@ void startMenu(){
 struct Record* newRecord(char* studentName, int classID, float percentage){
     // Function to create a newRecord
     struct Record* temp = (struct Record*)malloc(sizeof(struct Record));
+    if (temp == NULL){
+        printf("Memory allocated failed.\n");
+        exit(1);
+    }
+
     strcpy(temp->studentName, studentName);
     temp->classID = classID;
     temp->percentage = percentage;
     temp->next = NULL;
+
+    return temp;
 }
 
-void displayRecord(struct Record* student){
+void displayRecord(){
     if (head == NULL){
         printf("No records available.\n");
         return;
     }
-    printf("Name: %s\n", student->studentName);
-    printf("Class ID: %d\n", student->classID);
-    printf("Percentage: %.2f\n", student->percentage);
+    struct Record * current = head;
+    while (current != NULL){
+        printf("Name: %s\n", current->studentName);
+        printf("Class ID: %d\n", current->classID);
+        printf("Percentage: %.2f\n", current->percentage);
+        current = current->next;
+    }
 }
 
-struct Record* addStudentInfoMenu(){
+void addStudentInfoMenu(){
     char studentName[20];
     int classID;
     float percentage;
@@ -50,7 +61,7 @@ struct Record* addStudentInfoMenu(){
     // Get the info
     printf("\n======ADD STUDENT INFO======\n\n");
     printf("Enter name: ");
-    scanf("%s", studentName);
+    scanf("%19s", studentName);
 
     printf("\nEnter Class ID: ");
     scanf("%d", &classID);
@@ -61,7 +72,13 @@ struct Record* addStudentInfoMenu(){
     // Create and Store record based off info
     struct Record* student = newRecord(studentName, classID, percentage);
 
-    return student;
+    if (head == NULL){
+        head = student;
+        tail = student;
+    } else {
+        tail->next = student;
+        tail = student;
+    }
 }
 
 int main(){
@@ -76,7 +93,7 @@ int main(){
 
         if (option == 1){
             // Add a student record
-            student = addStudentInfoMenu();
+            addStudentInfoMenu();
 
         } else if(option == 2){
             // Show Student Record
@@ -97,4 +114,14 @@ int main(){
             printf("Invalid option. Try again.");
         };
     }
+
+    // Free allocated memory before exiting
+    struct Record* current = head;
+    while (current != NULL){
+        struct Record* temp = current;
+        current = current->next;
+        free(temp);
+    }
+
+    return 0;
 }
