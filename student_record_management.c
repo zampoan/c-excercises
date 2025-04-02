@@ -2,8 +2,19 @@
 #include <stdbool.h>
 #include <string.h>
 
+struct Record {
+    char studentName[20];
+    int classID;
+    float percentage;
+    struct Record* next;
+};
+
+// Head = start of linked list, tail = end of
+struct Record * head = NULL;
+struct Record * tail = NULL;
+
 void startMenu(){
-    printf("=====STUDENT DATABASE MANAGEMENT SYSTEM=====\n\n\n");
+    printf("\n=====STUDENT DATABASE MANAGEMENT SYSTEM=====\n\n\n");
     printf("\t1. Add Student Record\n");
     printf("\t2. Show Student Records\n");
     printf("\t3. Search Student\n");
@@ -11,13 +22,6 @@ void startMenu(){
     printf("\t5. Exit\n");
     printf("\t----------------------\n");
 }
-
-struct Record {
-    char studentName[20];
-    int classID;
-    float percentage;
-    struct Record* next;
-};
 
 struct Record* newRecord(char* studentName, int classID, float percentage){
     // Function to create a newRecord
@@ -28,13 +32,23 @@ struct Record* newRecord(char* studentName, int classID, float percentage){
     temp->next = NULL;
 }
 
-void addStudentInfoMenu(){
+void displayRecord(struct Record* student){
+    if (head == NULL){
+        printf("No records available.\n");
+        return;
+    }
+    printf("Name: %s\n", student->studentName);
+    printf("Class ID: %d\n", student->classID);
+    printf("Percentage: %.2f\n", student->percentage);
+}
+
+struct Record* addStudentInfoMenu(){
     char studentName[20];
     int classID;
     float percentage;
 
     // Get the info
-    printf("======ADD STUDENT INFO======\n\n");
+    printf("\n======ADD STUDENT INFO======\n\n");
     printf("Enter name: ");
     scanf("%s", studentName);
 
@@ -46,10 +60,13 @@ void addStudentInfoMenu(){
     
     // Create and Store record based off info
     struct Record* student = newRecord(studentName, classID, percentage);
+
+    return student;
 }
 
 int main(){
     bool exit = false;
+    struct Record * student;
     int option = 0;
 
     while(!exit){  
@@ -59,10 +76,12 @@ int main(){
 
         if (option == 1){
             // Add a student record
-            addStudentInfoMenu();
+            student = addStudentInfoMenu();
 
         } else if(option == 2){
             // Show Student Record
+            displayRecord(student);
+            //free(student);
 
         } else if (option == 3){
             // Search a student record
