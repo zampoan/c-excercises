@@ -7,38 +7,45 @@ Resource: https://www.w3resource.com/c-programming-exercises/linked_list/index.p
 struct Node {
     int data;           // Data of node
     struct Node *next;  // Address of next node
-} *head, *tail, *newNode, *temp;                // pointer to starting node
+} *head = NULL, *tail = NULL, *tempNode; // pointer to starting node, pointer to end node, pointer to temp node which alternates between end node
 
 void createNodes(int *numberOfNodes){
     /*  
         Create the number of nodes based of numberOfNodes
     */ 
-    // Step 1: Allocate memory
-    head = (struct Node*)malloc(sizeof(struct Node));
-
-    head->data = 11;
-    head->next = NULL;
-    tail = head;
-
-    // Step 2: Loop to create remaining nodes
-    for(int i = 1; i < *numberOfNodes + 1; i++){
-        newNode = (struct Node*)malloc(sizeof(struct Node));
-
-        newNode->data = 11 + i;
-        newNode->next = NULL;
-        
-        // Link previous node to new node
-        tail->next = newNode;
-        
-        // Move tail to newNode
-        tail = newNode;
+    if (*numberOfNodes <= 0){
+        printf("Invalid number of nodes.\n");
+        return;
     }
 
-    // Display the nodes
-    temp = head;
-    while (temp != NULL){
-        printf("%d\n", temp->data);
-        temp = temp->next;
+    for(int i = 0; i < *numberOfNodes; i++){
+        tempNode = (struct Node*)malloc(sizeof(struct Node));
+
+        printf("Input data for node:");
+        scanf("%d", &tempNode->data);
+
+        tempNode->next = NULL;
+
+        // Do the first node, if no address in first node
+        if (head == NULL){
+            // Put data into first node
+            head = tail = tempNode;
+
+        } // Do other nodes if first node is occupied
+        else {
+            tail->next = tempNode;
+            tail = tempNode;
+
+        }
+    }
+}
+
+void displayNodes(){
+    struct Node *current = head;
+
+    while (current != NULL){
+        printf("%d\n", current->data);
+        current = current->next;
     }
 }
 
@@ -48,6 +55,7 @@ void q1(){
     scanf("%d", &numberOfNodes);
 
     createNodes(&numberOfNodes);
+    displayNodes();
 }
 
 int main(){
