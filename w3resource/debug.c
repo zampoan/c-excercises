@@ -1,10 +1,28 @@
-int main(){
-    int c = 10;
-    int *d = &c;
-    
-    
-    printf("%d\n", c);
-    printf("memory address of c: %d\n ", d);
-    printf("pointer of c: %d\n", &d);
+#include <stdio.h>
 
+void fixedSizedArr(){
+    int arr[5];
+    int arrLength = sizeof(arr)/sizeof(arr[0]);
+    int idx = 0;
+    int newElement = 44;
+
+    printf("Before: \n");
+    for (int i = 0; i < arrLength; i++){
+        printf("%d\n", arr[i]);
+    }
+
+    if (idx < arrLength){
+        arr[idx] = newElement;
+    }
+
+    printf("After: \n");
+    for (int i = 0; i < arrLength; i++){
+        printf("%d\n", arr[i]);
+    }
 }
+
+int main(){
+    fixedSizedArr();
+}
+    
+    
