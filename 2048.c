@@ -31,40 +31,32 @@ int moveBoard(int *direction, int (*board)[SIZE]){
     // Shifting Down
     } 
     else if(*direction == 1){
-        // Iterate through the whole board for non-zeros
-        for (int row = 0; row < SIZE; row++){    
-            for (int col = 0; col < SIZE; col++){
-                
-                // Check for non-zero
+        // Count backwards instead, start at [SIZE][SIZE]
+        for (int row = 3; row >= 0; row--){
+            for (int col = 3; col >= 0; col--){
+
+                // Look for non-zeros
                 if (board[row][col] != 0){
 
-                    // Store the value to be moved
+                    // When non-zero is found, set it to numberToBeMoved
                     numberToBeMoved = board[row][col];
-
-                    // Check the cols, start from the end 
-                    for (int row1 = SIZE - 1; row1 >= 0; row1--){
-
-
-                        // Check for non-zero, if non zero go to next row, if zero
-                        // that is the new location, once in new location, break
+                    
+                    // Starting from the bottom, check to see if current row has 0 
+                    for (int row1 = 3; row1 >=0; row1--){
+                        
+                        // If row is zero
                         if (board[row1][col] == 0){
 
-                            // Replace the value to be moved to the location
+                            // Set the new position to be the value, set old position to 0
                             board[row1][col] = numberToBeMoved;
-
-                            // replace its prev cords with 0
                             board[row][col] = 0;
                             break;
-
-                        } else {
-                            // do nothing
-                        }
-
+                        } 
                     }
                 }
             }
-            printf("\n");
         }
+
     } 
     // Shifting Left
     else if (*direction == 2){
@@ -83,7 +75,7 @@ int moveBoard(int *direction, int (*board)[SIZE]){
 
 
 int main(){
-    int board[SIZE][SIZE] = {{9, 2, 0 ,0}, {3, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}};
+    int board[SIZE][SIZE] = {{0, 2, 0 ,0}, {0, 3, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}};
     int score = 0;
     int direction = 0;
 
