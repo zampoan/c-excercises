@@ -21,8 +21,7 @@ void fixedSizedArr(){
     }
 }
 
+
 int main(){
     fixedSizedArr();
 }
-    
-    
