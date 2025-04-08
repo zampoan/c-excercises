@@ -1,18 +1,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+int generateNumber(){
+    int randX = rand() % 4;
+    int randY = rand() % 4;
+
+    printf("X: %d | Y: %d\n", randX, randY);
+    return 1;
+}
+
+
 int main(){
-    int board[4][4] = {{0, 0, 0 ,0}, {0, 0, 0, 0}, {0, 0, 0, 0}, {0, 0, 0, 0}};
-    int count = 16;
+    int number = 1;
 
-    for (int row = 3; row >= 0; row--){
-        for (int col = 3; col >= 0; col--){
-
-            board[row][col] = count;
-            count = count - 1;
-
-            printf("%d ", board[row][col]);
-        }
+    while (number < 100){
+        generateNumber();
+        number += 1;
     }
 
 }
